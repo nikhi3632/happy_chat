@@ -28,7 +28,6 @@ class ConfidantClient:
     async def send_request(self, headers: Dict[str, str], payload: Dict[str, Any]) -> List[Dict[str, Any]]:
         try:
             async with httpx.AsyncClient() as client:
-                print(self.api_url, headers, payload)
                 async with client.stream("POST", 
                                         self.api_url, 
                                         headers=headers, 
