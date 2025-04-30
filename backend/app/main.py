@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from routes.app import router as app_router
 from routes.confidant import router as confidant_router
-from services.services import get_tts_model, get_stt_model  # # Triggers model loading on app start
+from services.services import get_tts_model, get_stt_model  # Triggers model loading on app start
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
