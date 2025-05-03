@@ -25,9 +25,6 @@ async def transcribe_audio(file: UploadFile = File(...)):
 async def think_and_respond(req: Chat):
     try:
         response = await confidant_client.chat_response(req)
-        response = {
-            "output" : "Hey there! I'm Max Sapo — CEO of Happyverse, your new AI-powered assistant for growth, goals, and wellbeing"
-        }
         response_text = response['output']
 
         tts_model = get_tts_model()
