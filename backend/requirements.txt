@@ -120,6 +120,7 @@ starlette==0.46.2
 SudachiDict-core==20250129
 SudachiPy==0.6.10
 sympy==1.14.0
+tenacity==9.1.2
 tensorboard==2.19.0
 tensorboard-data-server==0.7.2
 thinc==8.2.5
