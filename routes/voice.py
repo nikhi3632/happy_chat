@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from models import Chat
-from services.services import get_stt_model, get_tts_model
+from services.services import get_stt_model
+# from services.services import get_tts_model
 from clients.confidant_client import ConfidantClient
 from config import Config
 import io
