@@ -7,6 +7,7 @@ from services.services import get_tts_model, get_stt_model  # Triggers model loa
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 import uvicorn
+import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,4 +34,5 @@ app.include_router(confidant_router)
 app.include_router(voice_router)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host='0.0.0.0', port=9000)
+    port = int(os.environ.get("PORT", 9000))
+    uvicorn.run("main:app", host='0.0.0.0', port=port)

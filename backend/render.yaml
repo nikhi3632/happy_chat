@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: happy_chat_backend
-    runtime: python
-    plan: free
-    autoDeploy: false
-    buildCommand: pip install -r requirements.txt
-    startCommand: cd app && uvicorn main:app --host $HOST --port $PORT
