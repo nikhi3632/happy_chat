@@ -1,12 +1,13 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from models import Chat
-from services.services import get_stt_model
+# from services.services import get_stt_model
 # from services.services import get_tts_model
 from clients.confidant_client import ConfidantClient
 from config import Config
 import io
 import base64
 from gtts import gTTS
+from faster_whisper import WhisperModel
 import time
 
 router = APIRouter()
@@ -14,7 +15,7 @@ confidant_client = ConfidantClient(Config.API_KEY, Config.BASE_URL)
 
 @router.post("/transcribe")
 async def transcribe_audio(audio: UploadFile = File(...)):
-    stt_model = get_stt_model()
+    stt_model = WhisperModel("base", compute_type="int8")
     try:
         audio_bytes = await audio.read()
         audio_stream = io.BytesIO(audio_bytes)
