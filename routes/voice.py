@@ -7,7 +7,6 @@ from config import Config
 import io
 import base64
 from gtts import gTTS
-from faster_whisper import WhisperModel
 import time
 
 router = APIRouter()
