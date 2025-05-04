@@ -5,3 +5,6 @@ faster-whisper
 requests
 pydantic
 python-multipart
+httpx
+tenacity
+python-dotenv
