@@ -2,4 +2,3 @@
 *.pyo
 .env
 venv
-.vercel

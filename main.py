@@ -12,10 +12,10 @@ import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Preloading TTS and STT models...")
+    # print("Preloading TTS and STT models...")
     # _ = get_tts_model
     # _ = get_stt_model
-    print("Models loaded and ready!")
+    # print("Models loaded and ready!")
     yield
 
 app = FastAPI(lifespan=lifespan)
