@@ -1,9 +1,14 @@
 import httpx
+from tenacity import retry, stop_after_attempt, wait_exponential, before_sleep_log
 from fastapi import HTTPException
 from typing import Dict, Any, List
 from config import Config
 from utils import parse_streaming_response, extract_text_from_chunks
 from models import Chat, ChatResponse
+
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class ConfidantClient:
     def __init__(self, api_key: str = Config.API_KEY, base_url: str = Config.BASE_URL):
@@ -25,6 +30,11 @@ class ConfidantClient:
             "stream": True
         }
 
+    @retry(
+        stop=stop_after_attempt(5),  # Retry up to 5 times
+        wait=wait_exponential(min=1, max=10),  # Exponential backoff between retries
+        before_sleep=before_sleep_log(logger, logging.INFO),  # Log before each retry
+    )
     async def send_request(self, headers: Dict[str, str], payload: Dict[str, Any]) -> List[Dict[str, Any]]:
         try:
             async with httpx.AsyncClient() as client:
