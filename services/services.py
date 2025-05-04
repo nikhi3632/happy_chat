@@ -4,7 +4,14 @@ import functools
 
 # Instantiate once
 # _tts_model = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=False, gpu=False)
-_stt_model = WhisperModel("base", compute_type="int8")
+# _stt_model = WhisperModel("base", compute_type="int8")
+_stt_model = WhisperModel(
+    model_size_or_path="tiny",
+    device="cpu",
+    compute_type="int8",
+    cpu_threads=1,
+    num_workers=1
+)
 
 # Singleton pattern with lazy loading for TTS model
 # @functools.lru_cache(maxsize=1)
