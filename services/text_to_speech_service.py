@@ -1,4 +1,4 @@
-from services import get_tts_model
+from services.services import get_tts_model
 
 def synthesize_speech(text: str, output_path: str, speaker: str, language: str = "en") -> str:
     tts_model = get_tts_model()

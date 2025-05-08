@@ -1,4 +1,4 @@
-from services import get_stt_model
+from services.services import get_stt_model
 
 def transcribe_audio(file_path: str, output_path: str) -> str:
     stt_model = get_stt_model()

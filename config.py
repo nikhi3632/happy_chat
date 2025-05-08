@@ -7,3 +7,4 @@ class Config:
     BASE_URL = os.getenv("BASE_URL")
     API_KEY = os.getenv("API_KEY")
     CHAT_MODEL = os.getenv("CHAT_MODEL")
+    BEAM_TOKEN = os.getenv("BEAM_TOKEN")

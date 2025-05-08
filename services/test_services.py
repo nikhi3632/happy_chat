@@ -2,7 +2,7 @@ from speech_to_text_service import transcribe_audio
 from text_to_speech_service import synthesize_speech
 import os
 
-TEST_DIR = os.path.join(os.getcwd() + 'test')
+TEST_DIR = os.path.join(os.getcwd(), 'test')
 
 def test(file_path):
     transcription_output_path = os.path.join(TEST_DIR, 'transcription.txt')

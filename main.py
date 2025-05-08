@@ -1,24 +1,13 @@
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
 from routes.app import router as app_router
 from routes.confidant import router as confidant_router
 from routes.voice import router as voice_router
-from services.services import get_stt_model  # Triggers model loading on app start
-# from services.services import get_tts_model
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 import uvicorn
 import os
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print("Preloading STT model...")
-    # _ = get_tts_model
-    _ = get_stt_model
-    print("Models loaded and ready!")
-    yield
-
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,

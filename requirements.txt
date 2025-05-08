@@ -10,3 +10,4 @@ tenacity
 huggingface-hub
 python-dotenv
 hf-xet
+coqui-tts

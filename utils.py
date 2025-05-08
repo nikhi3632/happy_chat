@@ -1,5 +1,10 @@
 import json
 import httpx
+import logging
+from tenacity import retry, stop_after_attempt, wait_exponential, before_sleep_log
+
+logger = logging.getLogger("app_logger")
+logger.setLevel(logging.INFO)
 
 async def parse_streaming_response(response: httpx.Response) -> list:
     """
