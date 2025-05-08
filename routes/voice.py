@@ -6,6 +6,7 @@ import base64
 import httpx
 from gtts import gTTS, gTTSError
 from io import BytesIO
+import asyncio
 
 router = APIRouter()
 confidant_client = ConfidantClient(Config.API_KEY, Config.BASE_URL)
@@ -13,6 +14,15 @@ beam_client = httpx.AsyncClient(http2=True, timeout=httpx.Timeout(connect=None, 
 
 BEAM_TTS_URL = "https://coqui-xtts-v2-0ce9c9b.app.beam.cloud"
 BEAM_STT_URL = "https://faster-whisper-base-db92dd5.app.beam.cloud"
+
+async def generate_gtts_audio(text: str) -> str:
+    def synthesize():
+        tts = gTTS(text=text, lang="en")
+        buf = BytesIO()
+        tts.write_to_fp(buf)
+        buf.seek(0)
+        return base64.b64encode(buf.read()).decode("utf-8")
+    return await asyncio.to_thread(synthesize)
 
 @router.post("/transcribe")
 async def transcribe_audio(audio: UploadFile = File(...)):
@@ -72,12 +82,7 @@ async def think_and_respond(req: Chat):
         
         elif req.tts_provider == "gtts":
             try:
-                tts = gTTS(text=response_text, lang="en")
-                buf = BytesIO()
-                tts.write_to_fp(buf)
-                buf.seek(0)
-                audio_bytes = buf.read()
-                audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
+                audio_base64 = await generate_gtts_audio(response_text)
             except gTTSError as gtts_err:
                 raise HTTPException(status_code=500, detail=f"gTTS Error: {str(gtts_err)}")
         
