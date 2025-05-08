@@ -15,20 +15,24 @@ beam_client = httpx.AsyncClient(http2=True, timeout=httpx.Timeout(connect=None, 
 BEAM_TTS_URL = "https://coqui-xtts-v2-0ce9c9b.app.beam.cloud"
 BEAM_STT_URL = "https://faster-whisper-base-db92dd5.app.beam.cloud"
 
+def encode_audio(audio_bytes: bytes) -> str:
+    return base64.b64encode(audio_bytes).decode("utf-8")
+
 async def generate_gtts_audio(text: str) -> str:
     def synthesize():
         tts = gTTS(text=text, lang="en")
         buf = BytesIO()
         tts.write_to_fp(buf)
         buf.seek(0)
-        return base64.b64encode(buf.read()).decode("utf-8")
+        audio_bytes = buf.read()
+        return encode_audio(audio_bytes)
     return await asyncio.to_thread(synthesize)
 
 @router.post("/transcribe")
 async def transcribe_audio(audio: UploadFile = File(...)):
     try:
         audio_bytes = await audio.read()
-        audio_b64 = base64.b64encode(audio_bytes).decode("utf-8")
+        audio_b64 = await asyncio.to_thread(encode_audio, audio_bytes)
         beam_payload = {
             "audio_file": audio_b64
         }
