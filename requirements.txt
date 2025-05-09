@@ -13,3 +13,4 @@ hf-xet
 coqui-tts
 fastapi-profiler
 httpx[http2]
+uvloop

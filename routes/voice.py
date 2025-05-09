@@ -13,7 +13,7 @@ confidant_client = ConfidantClient(Config.API_KEY, Config.BASE_URL)
 beam_client = httpx.AsyncClient(http2=True, timeout=httpx.Timeout(connect=None, read=None, write=None, pool=None))
 
 BEAM_TTS_URL = "https://coqui-xtts-v2-0ce9c9b.app.beam.cloud"
-BEAM_STT_URL = "https://faster-whisper-base-db92dd5.app.beam.cloud"
+BEAM_STT_URL = "https://faster-whisper-base-db92dd5-v1.app.beam.cloud"
 
 def encode_audio(audio_bytes: bytes) -> str:
     return base64.b64encode(audio_bytes).decode("utf-8")

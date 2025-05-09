@@ -15,9 +15,11 @@ app = FastAPI()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup logic
-    yield
+    try:
+        yield
     # Shutdown logic
-    await beam_client.aclose()
+    finally:
+        await beam_client.aclose()
 
 app = FastAPI(lifespan=lifespan)
 
